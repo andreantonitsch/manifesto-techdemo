@@ -208,8 +208,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3228053665050835110}
   - component: {fileID: 3228053665050835106}
-  - component: {fileID: 6439691026699505350}
-  - component: {fileID: 1809681655}
   - component: {fileID: -1228081791864355645}
   m_Layer: 0
   m_Name: Boid
@@ -251,33 +249,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!135 &6439691026699505350
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3228053665050835104}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 6
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &1809681655
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3228053665050835104}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-1228081791864355645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,18 +262,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    separations: 0
+    separation: 0
     alignment: 0
     cohesion: 0
     obstacles: 0
     LOS: 0
-    FollowLeader: 0
-    DistanceBehindLeader: 0
+    follow: 0
+    distance_behind_leader: 0
     team: 0
   ID: 0
   neighVis: 0
   EnemyNeighVis: 0
-  Radius_collider: {fileID: 6439691026699505350}
+  Radius_collider: {fileID: 0}
   vMax: 25
   Leader: {fileID: 0}
 --- !u!1 &7418419153359485891

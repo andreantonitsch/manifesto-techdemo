@@ -74,8 +74,6 @@ namespace ManifestoTechDemo
             // Initialize data structures.
             for (int i = 0; i < active_boids; i++)
             {
-                boids[i].ID = 0;
-
                 //Set everyone to follow the first element. AKA the mouse.
                 leader[i] = 0;
 
@@ -113,19 +111,7 @@ namespace ManifestoTechDemo
             var leader_p = boids[0].rb.position;
             position[0] = float2(leader_p.x, leader_p.z);
 
-            grid.Clear();
-            var neighboursJob = new FillNeighboursJob
-            {
-                grid = grid,
 
-                position = position,
-
-                offset = offset_array,
-                boid_amount = active_boids,
-                grid_dimensions = grid_dimensions
-            };
-            var neighborFillHandle = neighboursJob.Schedule();
-            neighborFillHandle.Complete();
         }
 
         // Update is called once per frame
@@ -138,6 +124,17 @@ namespace ManifestoTechDemo
         void ScheduleMovement()
         {
 
+
+            var neighboursJob = new FillNeighboursJob
+            {
+                grid = grid,
+
+                position = position,
+
+                offset = offset_array,
+                boid_amount = active_boids,
+                grid_dimensions = grid_dimensions
+            };
 
             var componentsJob = new CalculateComponentsJob
             {
@@ -184,13 +181,13 @@ namespace ManifestoTechDemo
                 vMax = vMax
             };
 
-
-            var componentsHandle = componentsJob.Schedule();
+            grid.Clear();
+            var neighborFillHandle = neighboursJob.Schedule();
+            var componentsHandle = componentsJob.Schedule(neighborFillHandle);
             var velocityHandle = velocityJob.Schedule(componentsHandle);
             var positionHandle = positionJob.Schedule(velocityHandle);
 
             positionHandle.Complete();
-
         }
 
 
@@ -209,11 +206,11 @@ namespace ManifestoTechDemo
 
             public void Execute()
             {
-                for (int i = 1; i < boid_amount; i++)
+                for (int i = 0; i < boid_amount; i++)
                 {
                     var cell = grid_dimensions.position_to_cell(position[i]);
 
-                    for (int j = 0; i < 9; i++)
+                    for (int j = 0; j < 9; j++)
                     {
                         var id = grid_dimensions.cell_to_id(cell + offset[j]);
                         grid.Add(id, i);
