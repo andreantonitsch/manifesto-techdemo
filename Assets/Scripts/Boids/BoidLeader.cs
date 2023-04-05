@@ -16,10 +16,6 @@ public class BoidLeader : BoidAgent
         _lastPos = transform.position;
     }
     
-    new void FixedUpdate()
-    {
-
-    }
 
     // Update is called once per frame
     new void Update()
